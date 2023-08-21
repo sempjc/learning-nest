@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { TodoStatus } from '../types/TodoStatus';
+import { TodoStatus } from '../../Services/Todo/types/TodoStatus';
 
 export class TodoDto {
   @ApiProperty() status: TodoStatus;

@@ -19,7 +19,9 @@ export class TodoService {
 
   update(id: string, todo: Todo): void {
     const index = this.todos.findIndex((todo) => todo.id === id);
-    this.todos[index] = todo;
+    const prevTodo = this.todos[index];
+    const newTodo = { ...prevTodo, ...todo };
+    this.todos[index] = newTodo;
   }
 
   delete(id: string): void {

@@ -8,9 +8,10 @@ import {
   Param,
 } from '@nestjs/common';
 import { TodoDto } from './dto/todo.dto';
-import { Todo } from './types/todo.td';
-import { TodoService } from './todo.services';
-import { randomBytes } from 'crypto';
+import { Todo } from '../Services/Todo/types/todo.td';
+import { TodoService } from '../Services/Todo/todo.services';
+// import { randomBytes, randomUUID } from 'crypto';
+import { randomUUID } from 'crypto';
 
 @Controller('todo')
 export class TodoController {
@@ -19,10 +20,11 @@ export class TodoController {
   @Post()
   async create(@Body() todoDto: TodoDto) {
     const todo: Todo = {
-      id: randomBytes(16).toString('hex'),
+      id: randomUUID(),
+      // id: randomBytes(16).toString('hex'),
       ...todoDto,
       createdAt: new Date(),
-      updatedAt: new Date(),
+      updatedAt: null,
     };
     this.todoService.create(todo);
   }
@@ -41,6 +43,7 @@ export class TodoController {
     const todo = this.todoService.findById(id);
     if (!todo) throw new Error('Todo not found');
     const todoDto: TodoDto = {
+      id,
       ...todo,
     };
     return todoDto;
